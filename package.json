@@ -1,7 +1,7 @@
 {
-  "name": "express-mongo-api-boilerplate",
+  "name": "vision-api",
   "version": "1.0.0",
-  "description": "basic express api to get started",
+  "description": "api for getting GCP Vision labels/scores by user",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,32 +10,37 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paineleffler/express-mongo-api-boilerplate.git"
+    "url": "git+https://github.com/paineleffler/vision-api.git"
   },
   "keywords": [
     "node",
     "express",
     "api",
     "mongodb",
-    "mongo"
+    "mongo",
+    "google cloud platform",
+    "vision",
+    "twitter"
   ],
   "author": "Paine Leffler",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/paineleffler/express-mongo-api-boilerplate/issues"
+    "url": "https://github.com/paineleffler/vision-api/issues"
   },
-  "homepage": "https://github.com/paineleffler/express-mongo-api-boilerplate#readme",
+  "homepage": "https://github.com/paineleffler/vision-api",
   "dependencies": {
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
+    "@google-cloud/vision": "^0.12.0",
     "helmet": "^3.6.1",
     "mongodb": "^2.2.29",
     "nodemailer": "^4.0.1",
     "path": "^0.12.7",
-    "pug": "^2.0.0-rc.2"
+    "pug": "^2.0.0-rc.2",
+    "twitter-js-client": "^0.0.5"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

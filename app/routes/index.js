@@ -1,5 +1,5 @@
-const fooRoutes = require('./foo_routes');
+const twitterRoutes = require('./twitter_routes');
 
 module.exports = function(app, db) {
-  fooRoutes(app, db);
+  twitterRoutes(app, db);
 };
