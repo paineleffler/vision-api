@@ -28,7 +28,7 @@ module.exports = function(app, db) {
       var tweets = JSON.parse(data)
       var urls = [];
       for (var i in tweets) {
-        if(tweets[i].entities.media) {
+        if (tweets[i].entities.media && tweets[i].entities.media[0].type == "photo") {
           urls.push(tweets[i].entities.media[0].media_url_https)
         }
       }
@@ -56,7 +56,6 @@ module.exports = function(app, db) {
       } 
       // not found
       else {
-        console.log('No results found for media with that id! Generating results.....');
           vision.labelDetection({ source: { imageUri: `https://pbs.twimg.com/media/${req.query.mid}.jpg` } })
           .then((results) => {
             const url_result = {
