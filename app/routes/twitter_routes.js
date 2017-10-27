@@ -26,23 +26,24 @@ module.exports = function(app, db) {
     }, 
     function (data) {
       var tweets = JSON.parse(data)
-      var urls = [];
+      var response = [];
       for (var i in tweets) {
         if (tweets[i].entities.media && tweets[i].entities.media[0].type == "photo") {
-          urls.push(tweets[i].entities.media[0].media_url_https)
+          response.push({ tweetID: tweets[i].id , url: tweets[i].entities.media[0].media_url_https })
         }
       }
-      console.log(urls)
-      res.send(urls)
+      res.send(response)
     })
   });
 
-  app.get('/results', (req, res) => {
-    if (req.query.mid === undefined) {
+  app.post('/results', (req, res) => {
+    const url = req.body.url;
+    const tweetID = req.body.tweetID;
+    if (url === undefined && tweetID == undefined) {
       res.status(400).end();
       return;
     }
-    const details = { 'mid': req.query.mid};
+    const details = { 'tweetID': tweetID};
 
     db.collection('twitter-media').findOne(details, (err, item) => {
       // backend error
@@ -56,14 +57,15 @@ module.exports = function(app, db) {
       } 
       // not found
       else {
-          vision.labelDetection({ source: { imageUri: `https://pbs.twimg.com/media/${req.query.mid}.jpg` } })
+          vision.labelDetection({ source: { imageUri: url } })
           .then((results) => {
-            const url_result = {
-              mid: req.query.mid,
+            const tweet_result = {
+              tweetID: tweetID,
+              url: url,
               results: results,
               time: new Date()
             };
-            db.collection('twitter-media').insert(url_result, (err, item) => {
+            db.collection('twitter-media').insert(tweet_result, (err, item) => {
               if (err) {
                 res.send({ 'error': 'An error has occurred with creating your media results.' });
               } else {
