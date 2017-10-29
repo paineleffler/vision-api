@@ -20,7 +20,7 @@ module.exports = function(app, db) {
 
   app.get('/users', (req, res) => {
     const username = req.query.id;
-    twitter.getUserTimeline({ screen_name: username, count: '100'},
+    twitter.getUserTimeline({ screen_name: username, count: '50'},
     function (err, response, body) {
       console.log('ERROR [%s]', err);
     }, 
@@ -57,22 +57,26 @@ module.exports = function(app, db) {
       } 
       // not found
       else {
-          vision.labelDetection({ source: { imageUri: url } })
-          .then((results) => {
-            const tweet_result = {
-              tweetID: tweetID,
-              url: url,
-              results: results,
-              time: new Date()
-            };
-            db.collection('twitter-media').insert(tweet_result, (err, item) => {
-              if (err) {
-                res.send({ 'error': 'An error has occurred with creating your media results.' });
-              } else {
-                res.send(item);
-              }
-            });
+        console.log("Not in DB, sending to GV API.")
+        vision.labelDetection({ source: { imageUri: url } })
+        .then((results) => {
+          console.log("Got a result for: ", url)
+          const tweet_result = {
+            tweetID: tweetID,
+            url: url,
+            results: results,
+            time: new Date()
+          };
+          res.send(tweet_result)
+          db.collection('twitter-media').insert(tweet_result, (err, item) => {
+            if (err) {
+              res.send({ 'error': 'An error has occurred with creating your media results.' });
+            }
+          });
         })
+        .catch((err) => {
+          console.error('ERROR:', err);
+        });
       }
     });
   });
