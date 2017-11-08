@@ -1,7 +1,5 @@
-const twitterRoutes = require('./twitter_routes');
-const instagramRoutes = require('./instagram_routes');
+const mediaRoutes = require('./media_routes');
 
 module.exports = function(app, db) {
-  twitterRoutes(app, db);
-  instagramRoutes(app, db);
+  mediaRoutes(app, db);
 };
