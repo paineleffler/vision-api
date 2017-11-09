@@ -30,7 +30,11 @@ module.exports = function(app, db) {
       var response = [];
       for (var i in tweets) {
         if (tweets[i].entities.media && tweets[i].entities.media[0].type == "photo") {
-          response.push({ tweetID: tweets[i].id , url: tweets[i].entities.media[0].media_url_https })
+          response.push({ 
+            username: username,
+            platform: 'twitter',
+            url: tweets[i].entities.media[0].media_url_https,
+          })
         }
       }
       res.send(response)
@@ -47,7 +51,11 @@ module.exports = function(app, db) {
     var response = []
 
     streamOfPosts.on('data', (post) => {
-      response.push({ instaID: `${post.username}-${post.id}`, url: post.media })
+      response.push({ 
+        username: post.username,
+        platform: 'instagram',
+        url: post.media
+      })
     });
 
     streamOfPosts.on('end', () => {
@@ -57,14 +65,17 @@ module.exports = function(app, db) {
 
   app.post('/results', (req, res) => {
     const url = req.body.url;
-    const tweetID = req.body.tweetID;
-    if (url === undefined && tweetID == undefined) {
+    const username = req.body.username;
+    const platform = req.body.platform;
+
+    if (url === undefined && platform === undefined && username === undefined) {
       res.status(400).end();
       return;
     }
-    const details = { 'tweetID': tweetID};
 
-    db.collection('twitter-media').findOne(details, (err, item) => {
+    const details = { 'url': url};
+
+    db.collection('media').findOne(details, (err, item) => {
       // backend error
       if (err) {
         res.send({'error':'An error has occurred with finding your media.'});
@@ -80,14 +91,15 @@ module.exports = function(app, db) {
         vision.labelDetection({ source: { imageUri: url } })
         .then((results) => {
           console.log("Got a result for: ", url)
-          const tweet_result = {
-            tweetID: tweetID,
+          const media_result = {
+            username: username,
+            platform: platform,
             url: url,
             results: results,
             time: new Date()
           };
-          res.send(tweet_result)
-          db.collection('twitter-media').insert(tweet_result, (err, item) => {
+          res.send(media_result)
+          db.collection('media').insert(media_result, (err, item) => {
             if (err) {
               res.send({ 'error': 'An error has occurred with creating your media results.' });
             }
