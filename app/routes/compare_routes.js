@@ -15,7 +15,8 @@ module.exports = function(app, db) {
       for (var i = 0; i < documents.length; i++) {
         var labels = documents[i].results[0].labelAnnotations
        for (var j = 0; j < labels.length; j++) {
-         response.push(labels[j].description)
+        if (labels[j].score > .8 && !isUselessWord(labels[j].description))
+          response.push(labels[j].description)
        }
       }
       var tallied = {}
@@ -29,4 +30,13 @@ module.exports = function(app, db) {
       res.send(tallied)
     })
   });
-}  
+} 
+
+function isUselessWord(word) {
+  if (word.toLowerCase().search(/(product|professional|profession|official|entrepreneur|businessperson|fun|event|snapshot|room|logo|brand|fiction|graphics|audio|circle|purple|photo caption|number|line|angle|color|white|red|yellow|blue|black|screenshot|text|label|girl|woman|man|boy|mammal|animal|material|font|area|advertising|advertisment)/) !== -1) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
