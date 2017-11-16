@@ -18,7 +18,15 @@ module.exports = function(app, db) {
          response.push(labels[j].description)
        }
       }
-      res.send(response)
+      var tallied = {}
+      for (var i = 0; i < response.length; i++) {
+        if (tallied[response[i]]) {
+          tallied[response[i]]++
+        } else {
+          tallied[response[i]] = 1
+        }
+      }
+      res.send(tallied)
     })
   });
 }  
