@@ -61,6 +61,9 @@ module.exports = function(app, db) {
     streamOfPosts.on('end', () => {
       res.send(response)
     });
+    streamOfPosts.on('error', (error) => {
+      res.send(error)
+    });
   });
 
   app.post('/results', (req, res) => {
