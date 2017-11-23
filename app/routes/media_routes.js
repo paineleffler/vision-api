@@ -1,8 +1,8 @@
 const Vision = require('@google-cloud/vision');
 const Twitter = require('twitter-js-client').Twitter;
 var InstagramPosts = require('instagram-screen-scrape').InstagramPosts;
-//var cors = require('cors')
 
+//var cors = require('cors')
 var config = {
 	"consumerKey": process.env.CONSUMER_KEY,
 	"consumerSecret": process.env.CONSUMER_SECRET,
@@ -14,6 +14,7 @@ var config = {
 const twitter = new Twitter(config);
 const vision = Vision();
 var ObjectID = require('mongodb').ObjectID;
+
 // var corsOptions = { origin: 'https://domain.calling.api.com'}
 // add this to routes : cors(corsOptions)
 
@@ -41,7 +42,7 @@ module.exports = function(app, db) {
     })
   });
 
-  app.get('/instagram/users', (req, res) => {
+  app.get('/depricated/instagram/users', (req, res) => {
     const username = req.query.id;
 
     var streamOfPosts = new InstagramPosts({
