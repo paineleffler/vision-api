@@ -41,6 +41,7 @@
     "mongodb": "^2.2.29",
     "nodemailer": "^4.0.1",
     "path": "^0.12.7",
+    "public-instagram": "^0.6.1",
     "pug": "^2.0.0-rc.2",
     "twitter-js-client": "^0.0.5"
   },

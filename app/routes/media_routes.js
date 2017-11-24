@@ -1,6 +1,13 @@
 const Vision = require('@google-cloud/vision');
 const Twitter = require('twitter-js-client').Twitter;
 var InstagramPosts = require('instagram-screen-scrape').InstagramPosts;
+var instagram = require('public-instagram');
+
+// Async function in order to use await
+async function getInstaPosts(username) {
+  // Get all posts from a public user
+  return await instagram.users.posts(username);
+};
 
 //var cors = require('cors')
 var config = {
@@ -37,6 +44,22 @@ module.exports = function(app, db) {
             url: tweets[i].entities.media[0].media_url_https,
           })
         }
+      }
+      res.send(response)
+    })
+  });
+
+  app.get('/instagram/users', (req, res) => {
+    const username = req.query.id;
+    getInstaPosts(username).then((results) => {
+      var response = []
+      for (var i in results){
+        let r = {
+          username: username,
+          platform: 'instagram',
+          url: (results[i].image.search('.net') !== -1)?('https://scontent-atl3-1.cdninstagram.com' + results[i].image.split('.net')[1]):results[i].image
+        }
+        response.push(r)
       }
       res.send(response)
     })
