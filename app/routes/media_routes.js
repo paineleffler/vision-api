@@ -27,7 +27,7 @@ var ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(app, db) {
 
-  app.get('/twitter/users', (req, res) => {
+  app.get('/twitter/images', (req, res) => {
     const username = req.query.id;
     twitter.getUserTimeline({ screen_name: username, count: '50'},
     function (err, response, body) {
@@ -49,7 +49,7 @@ module.exports = function(app, db) {
     })
   });
 
-  app.get('/instagram/users', (req, res) => {
+  app.get('/instagram/images', (req, res) => {
     const username = req.query.id;
     getInstaPosts(username).then((results) => {
       var response = []
@@ -65,7 +65,7 @@ module.exports = function(app, db) {
     })
   });
 
-  app.get('/depricated/instagram/users', (req, res) => {
+  app.get('/depricated/instagram/images', (req, res) => {
     const username = req.query.id;
 
     var streamOfPosts = new InstagramPosts({

@@ -1,14 +1,17 @@
 module.exports = function(app, db) {
-  // /users?id=
-  app.get('/users', (req, res) => {
+  app.get('/labels', (req, res) => {
     const username = req.query.id;
+    const platform = req.query.platform;
 
     if (username === undefined) {
       res.status(400).end();
       return;
     }
 
-    const details = { 'username': username};
+    const details = { 
+      'username': username,
+      'platform': platform
+    };
 
     db.collection('media').find(details).toArray((error, documents) => {
       var response = []
