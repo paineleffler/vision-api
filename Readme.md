@@ -46,3 +46,21 @@ Fill out all the fields in .env. These are needed for the MongoDB connection and
   yarn
   yarn start
 ```
+
+## Known Issue during development 
+
+```
+  yarn run v1.2.1
+  $ node server.js
+  events.js:182
+        throw er; // Unhandled 'error' event
+        ^
+
+  Error: listen EADDRINUSE :::5000
+```
+
+This just means some process is using that port. To fix this run:
+
+`lsof -i :5000`
+
+`kill -9 <PID>` with <PID> being the Process ID given from the previous command.
