@@ -6,7 +6,7 @@ var instagram = require('public-instagram');
 // Async function in order to use await
 async function getInstaPosts(username) {
   // Get all posts from a public user
-  return await instagram.users.posts(username);
+  return await instagram.users.posts(username, 50);
 };
 
 //var cors = require('cors')
