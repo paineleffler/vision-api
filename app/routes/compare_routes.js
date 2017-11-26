@@ -9,9 +9,12 @@ module.exports = function(app, db) {
     }
 
     const details = { 
-      'username': username,
-      'platform': platform
+      'username': username
     };
+
+    if (platform !== undefined) {
+      details.platform = platform
+    }
 
     db.collection('media').find(details).toArray((error, documents) => {
       var response = []
