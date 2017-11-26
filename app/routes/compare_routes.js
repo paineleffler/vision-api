@@ -36,7 +36,7 @@ module.exports = function(app, db) {
 } 
 
 function isUselessWord(word) {
-  if (word.toLowerCase().search(/(product|sky|profession|official|entrepreneur|businessperson|fun|event|snapshot|room|logo|brand|fiction|graphics|audio|circle|purple|photo caption|number|line|angle|color|white|red|yellow|blue|black|screenshot|text|label|girl|woman|man|boy|mammal|animal|material|font|area|advertising|advertisment)/) !== -1) {
+  if (word.toLowerCase().search(/(product|photography|photograph|sky|profession|official|fun|event|snapshot|room|logo|brand|fiction|graphics|audio|circle|purple|photo caption|number|line|angle|color|white|red|yellow|blue|black|screenshot|text|label|girl|woman|man|boy|mammal|animal|material|font|area|advertising|advertisment)/) !== -1) {
     return true;
   }
   else {
