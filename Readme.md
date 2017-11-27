@@ -1,6 +1,6 @@
 # Vision-API
 
-This is an API wrapper for my final project for Digital Archeology. The Vision-UI interacts with this API via axios requests. Currently the API wrapper has the following routes:
+This is an API wrapper for my final project for Digital Archeology. The [Vision-UI](https://github.com/paineleffler/vision-ui) interacts with this API via axios requests. Currently the API wrapper has the following routes:
 
 ## Usage
 
