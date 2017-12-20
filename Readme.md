@@ -44,7 +44,11 @@ Fill out all the fields in .env. These are needed for the MongoDB connection and
 
 `vim .env`
 
+For simplicity, I would suggest using MLAB for your MongoDB instance.
 
+After installing 'gcloud', you will also need to run 'gcloud auth'. Make sure that the Vision API is enabled on your Google Account.
+
+For more information on how to get set up refer to [Google Cloud Platform Documentation](https://cloud.google.com/sdk/docs/how-to).
 
 ## Run the API
 
